@@ -18,7 +18,7 @@ export default function Login({ onLogin, theme, toggleTheme }) {
             <div className="login-logo-icon">💬</div>
             <div>
               <h1>Talki</h1>
-              <span>Real-time chat</span>
+              <span>real-time chat</span>
             </div>
           </div>
           <button className="theme-toggle" onClick={toggleTheme}>
@@ -26,22 +26,21 @@ export default function Login({ onLogin, theme, toggleTheme }) {
           </button>
         </div>
         <p className="login-subtitle">
-          তোমার নাম দাও — কোনো account লাগবে না।<br />
-          সরাসরি chat এ ঢুকে যাও।
+          Enter your name to join — no account needed.
         </p>
         <form onSubmit={handleSubmit}>
-          <label className="login-label">তোমার নাম</label>
+          <label className="login-label">Your name</label>
           <input
             className="login-input"
             type="text"
-            placeholder="যেমন: Rahim, Karim..."
+            placeholder="e.g. Hujaifa, Lamya..."
             value={name}
             onChange={e => setName(e.target.value)}
             maxLength={24}
             autoFocus
           />
           <button className="login-btn" type="submit" disabled={name.trim().length < 2}>
-            Chat এ যাও →
+            Enter chat →
           </button>
         </form>
       </div>
