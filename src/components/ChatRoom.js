@@ -16,10 +16,10 @@ function formatTime(ts) {
 function formatDate(ts) {
   const d = new Date(ts);
   const today = new Date();
-  if (d.toDateString() === today.toDateString()) return "আজ";
+  if (d.toDateString() === today.toDateString()) return "Today";
   const yest = new Date(today); yest.setDate(today.getDate() - 1);
-  if (d.toDateString() === yest.toDateString()) return "গতকাল";
-  return d.toLocaleDateString("bn-BD");
+  if (d.toDateString() === yest.toDateString()) return "Yesterday";
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
@@ -126,9 +126,9 @@ export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
 
   // ── Typing label ──
   const typingLabel = typingUsers.length === 1
-    ? `${typingUsers[0].name} লিখছে`
+    ? `${typingUsers[0].name} is typing`
     : typingUsers.length > 1
-    ? `${typingUsers.slice(0,2).map(u=>u.name).join(", ")} লিখছে`
+    ? `${typingUsers.slice(0,2).map(u=>u.name).join(", ")} are typing`
     : null;
 
   // ── Group messages by date ──
@@ -157,12 +157,12 @@ export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
           <div className="chat-logo">Talki</div>
           <div className="online-count">
             <span className="online-dot" />
-            {onlineUsers.length} অনলাইন
+            {onlineUsers.length} online
           </div>
         </div>
         <div className="chat-header-right">
           <button className="theme-toggle" onClick={toggleTheme}>{theme === "dark" ? "☀️" : "🌙"}</button>
-          <button className="logout-btn" onClick={onLogout}>বের হও</button>
+          <button className="logout-btn" onClick={onLogout}>Leave</button>
         </div>
       </div>
 
@@ -175,7 +175,7 @@ export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
                 {u.name[0].toUpperCase()}
               </div>
               <div className="user-status-dot" />
-              <span className="user-chip-name">{u.name}{u.userId === user.id ? " (তুমি)" : ""}</span>
+              <span className="user-chip-name">{u.name}{u.userId === user.id ? " (you)" : ""}</span>
             </div>
           ))}
         </div>
@@ -186,7 +186,7 @@ export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
         {grouped.length === 0 && (
           <div className="empty-state">
             <div className="empty-icon">💬</div>
-            <p>এখনো কোনো message নেই। প্রথমটা পাঠাও!</p>
+            <p>No messages yet. Say hello!</p>
           </div>
         )}
         {grouped.map(item => {
@@ -226,7 +226,7 @@ export default function ChatRoom({ user, theme, toggleTheme, onLogout }) {
         <div className="input-row">
           <textarea
             className="msg-input" rows={1}
-            placeholder="message লেখো... (Enter = send)"
+            placeholder="Type a message... (Enter to send)"
             value={text}
             onChange={handleTextChange}
             onKeyDown={handleKeyDown}
